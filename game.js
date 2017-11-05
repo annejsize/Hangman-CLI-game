@@ -18,6 +18,8 @@ var numBlanks = 0;
 var blanksAndSuccesses = [];
 var wrongLetters = [];
 
+var wordSelected = "";
+
 // function roundComplete() {
 //   console.log("Win Count: " + winCount + " | Loss Count: " + lossCount + " | Guesses Left " + guessesLeft);
 //
@@ -56,42 +58,43 @@ inquirer.prompt([
 
 ]).then(function(letter) {
 
-  var letterGuessed = letter.userInput;
-  checkLetters(letterGuessed);
+  selectedWord = new ReadyingForGame.SelectWord();
+  console.log(selectedWord);
 });
 
 
 //Create a constructor that selects a word from an array, splits said word into an array and creates a placeholder
+
+var ReadyingForGame = function () {
+
+var wordOptions = ["running", "miles", "intervals", "stretching", "strength", "weights", "sweat", "strong"];
+
 var SelectWord = function () {
-  var wordOptions = ["running", "miles", "intervals", "stretching", "strength", "weights", "sweat", "strong"];
+          selectedWord = this.wordOptions[Math.floor(Math.random() * this.wordOptions.length)];
+          console.log(selectedWord);
+  };
 
-  selectedWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
-  lettersInWord = selectedWord.split("");
-
-  blanksAndSuccesses = [];
-
-  //Populate blanks and correct guesses with the right number of blanks.
-  for (var i = 0; i < selectedWord.length; i++) {
-    blanksAndSuccesses.push("_");
-  }
-  //TESTERS
-  console.log(selectedWord);
-  console.log(lettersInWord);
-  console.log(blanksAndSuccesses);
+//Used for each letter in the current word. Each letter object should either display an underlying character, or a blank placeholder (such as an underscore), depending on whether or not the user has guessed the letter. This should contain letter specific logic and data.
+var SelectLetter = function () {
+      //Split the chosen word into individual letters and put into an array.
+      lettersInWord = this.selectedWord.split("");
+      blanksAndSuccesses = [];
+      //Populate blanks and correct guesses with the right number of blanks.
+      for (var i = 0; i < this.selectedWord.length; i++) {
+      blanksAndSuccesses.push("_");
+   }
+ };
 };
 
-// selectWord();
-
+//Constructor for Game Play
 function checkLetters(letterGuessed) {
 
-  var newSelectWord = new SelectWord(selectedWord, lettersInWord, blanksAndSuccesses);
+    inputLetter = letterGuessed;
+    selectedWord = ReadyingForGame.SelectWord.selectedWord;
+    lettersInWord = ;
+    blanksAndSuccesses = ;
 
-  this.inputLetter = letterGuessed;
-  this.selectedWord = newSelectWord.selectedWord;
-  // this.lettersInWord = newSelectWord.lettersInWord;
-  // this.blanksAndSuccesses = newSelectWord.blanksAndSuccesses;
-
-  // this.numBlanks = this.selectedWord.length;
+    numBlanks = ReadyingForGame.SelectWord.selectedWord;
 
 
   console.log(newSelectWord.selectedWord);
