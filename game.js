@@ -17,6 +17,7 @@ var lettersInWord = [];
 var numBlanks = 0;
 var blanksAndSuccesses = [];
 var wrongLetters = [];
+var letter = "";
 
 var wordSelected = "";
 
@@ -43,85 +44,83 @@ var selectWord = function () {
       this.blanksAndSuccesses.push("_");
    }
       console.log(this.blanksAndSuccesses);
-      console.log(this.lettersInWord);
-      console.log(this.numBlanks);
  };
 
 // CreateLetter();
 
-var CheckLetters = function (letter) {
+var CheckLetters = function(letter) {
 // function checkLetters(letter) {
   //Check to see if the letter is even in the wordToGuess
+   var gameWord = new selectWord();
+
   this.isLetterInWord = false;
   this.letter = letter;
   this.wrongLetters = [];
 
-  var gameWord = new selectWord();
-  
     console.log(this.letter);
+
     this.lettersInWord = gameWord.lettersInWord;
     this.guessesLeft = gameWord.guessesLeft;
 
   for (var i = 0; i < gameWord.numBlanks; i++) {
       if (gameWord.selectedWord[i] == this.letter) {
       this.isLetterInWord = true;
-      console.log(this.isLetterInWord);
+      console.log("You guessed " + this.letter + "!");
       }
   }
   if (this.isLetterInWord) {
       for (var j = 0; j < gameWord.numBlanks; j++) {
           if (gameWord.selectedWord[j] == this.letter) {
               gameWord.blanksAndSuccesses[j] = this.letter;
+              console.log(gameWord.blanksAndSuccesses);
       }
     }
   } else {
       this.wrongLetters.push(this.letter);
-      gameWord.guessesLeft--;
+      this.guessesLeft--;
+      console.log("Your guess of " + this.isLetterInWord + " was incorrect! You have " + this.guessesLeft + " guesses left!")
   }
-console.log(gameWord.blanksAndSuccesses);
-console.log(gameWord.guessesLeft);
-console.log(this.isLetterInWord);
 console.log(this.wrongLetters);
 }
 
 // CheckLetters("e");
 
-function roundComplete() {
-  var gameOn = new CheckLetters();
-  console.log("Win Count: " + winCount + " | Loss Count: " + lossCount + " | Guesses Left " + gameOn.guessesLeft);
-
-
+function roundComplete(letter) {
+  var gameOn = new CheckLetters(letter);
+  
   if (gameOn.lettersInWord == gameOn.blanksAndSuccesses) {
-    // winCount++;
+    winCount++;
     console.log("You Won!");
-    console.log(winCount);
+    console.log("Win Count: " + winCount + " | Loss Count: " + lossCount + " | Guesses Left " + gameOn.guessesLeft);
+    // console.log(winCount);
 
-    startGame();
+    CheckLetters(letter);
 
   } else if (gameOn.guessesLeft == 0) {
-    // lossCount++;
+    lossCount++;
+    console.log("Win Count: " + winCount + " | Loss Count: " + lossCount + " | Guesses Left " + gameOn.guessesLeft);
     console.log("You lost. *sad face*");
-    console.log(lossCount);
+    // console.log(lossCount);
 
-    startGame();
+    CheckLetters(letter);
   }
 }
 
-roundComplete("y");
+// roundComplete("e");
 
 
-// inquirer.prompt([
+inquirer.prompt([
 
-//   {
-//     type: "input",
-//     name: "userInput",
-//     message: "Guess a letter!"
-//   }
+  {
+    type: "input",
+    name: "userInput",
+    message: "Guess a letter!"
+  }
 
-// ]).then(function(letter) {
-// // CheckLetters(letter.userInput);
-// roundComplete(letter.userInput);
+]).then(function(letter) {
+// CheckLetters(letter.userInput);
+roundComplete(letter.userInput);
 
-// });
+});
 
 

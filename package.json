@@ -1,0 +1,22 @@
+{
+  "name": "hangman-cli-game",
+  "version": "1.0.0",
+  "description": "hangman cli game",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annejsize/Hangman-CLI-game.git"
+  },
+  "author": "jenna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/annejsize/Hangman-CLI-game/issues"
+  },
+  "homepage": "https://github.com/annejsize/Hangman-CLI-game#readme",
+  "dependencies": {
+    "inquirer": "^3.3.0"
+  }
+}
