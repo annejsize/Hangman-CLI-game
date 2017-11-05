@@ -20,100 +20,108 @@ var wrongLetters = [];
 
 var wordSelected = "";
 
-// function roundComplete() {
-//   console.log("Win Count: " + winCount + " | Loss Count: " + lossCount + " | Guesses Left " + guessesLeft);
-//
-//   console.log(guessesLeft);
-//   console.log(blanksAndSuccesses.join);
-//   console.log(wrongLetters);
-//
-//
-//   if (lettersInWord.toString() == blanksAndSuccesses.toString()) {
-//     winCount++;
-//     alert("You Won!");
-//
-//     document.getElementById("winCounter").innerHTML = winCount;
-//     startGame();
-//   } else if (guessesLeft == 0) {
-//     lossCount++;
-//     alert("You lost. *sad face*");
-//     document.getElementById("lossCounter").innerHTML = lossCount;
-//
-//     startGame();
-//   }
-// }
+
+// Used for each letter in the current word. Each letter object should either display an underlying character, or a blank placeholder (such as an underscore), depending on whether or not the user has guessed the letter. This should contain letter specific logic and data.
+var selectWord = function () {
+
+      var wordOptions = ["running", "miles", "intervals", "stretching", "strength", "weights", "sweat", "strong"];
+
+      this.selectedWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
+      console.log(this.selectedWord);
+
+      //Create blanks and Split the chosen word into individual letters and put into an array.
+      this.numBlanks = this.selectedWord.length;
+      this.lettersInWord = this.selectedWord.split("");
+
+      //Resetters guesses left;
+      this.guessesLeft = 9;
+      this.blanksAndSuccesses = [];
 
 
-// ------------- MAIN PROCESSES ---------------//
-// ===============================================
-//
-
-inquirer.prompt([
-
-  {
-    type: "input",
-    name: "userInput",
-    message: "Guess a letter!"
-  }
-
-]).then(function(letter) {
-
-  selectedWord = new ReadyingForGame.SelectWord();
-  console.log(selectedWord);
-});
-
-
-//Create a constructor that selects a word from an array, splits said word into an array and creates a placeholder
-
-var ReadyingForGame = function () {
-
-var wordOptions = ["running", "miles", "intervals", "stretching", "strength", "weights", "sweat", "strong"];
-
-var SelectWord = function () {
-          selectedWord = this.wordOptions[Math.floor(Math.random() * this.wordOptions.length)];
-          console.log(selectedWord);
-  };
-
-//Used for each letter in the current word. Each letter object should either display an underlying character, or a blank placeholder (such as an underscore), depending on whether or not the user has guessed the letter. This should contain letter specific logic and data.
-var SelectLetter = function () {
-      //Split the chosen word into individual letters and put into an array.
-      lettersInWord = this.selectedWord.split("");
-      blanksAndSuccesses = [];
       //Populate blanks and correct guesses with the right number of blanks.
       for (var i = 0; i < this.selectedWord.length; i++) {
-      blanksAndSuccesses.push("_");
+      this.blanksAndSuccesses.push("_");
    }
+      console.log(this.blanksAndSuccesses);
+      console.log(this.lettersInWord);
+      console.log(this.numBlanks);
  };
-};
 
-//Constructor for Game Play
-function checkLetters(letterGuessed) {
+// CreateLetter();
 
-    inputLetter = letterGuessed;
-    selectedWord = ReadyingForGame.SelectWord.selectedWord;
-    lettersInWord = ;
-    blanksAndSuccesses = ;
+var CheckLetters = function (letter) {
+// function checkLetters(letter) {
+  //Check to see if the letter is even in the wordToGuess
+  this.isLetterInWord = false;
+  this.letter = letter;
+  this.wrongLetters = [];
 
-    numBlanks = ReadyingForGame.SelectWord.selectedWord;
+  var gameWord = new selectWord();
+  
+    console.log(this.letter);
+    this.lettersInWord = gameWord.lettersInWord;
+    this.guessesLeft = gameWord.guessesLeft;
 
-
-  console.log(newSelectWord.selectedWord);
-  console.log(this.inputLetter );
-
-
-  // for (var i = 0; i < this.numBlanks; i++) {
-  //   if (this.selectedWord[i] == this.inputLetter) {
-  //     isLetterInWord = true;
-  //   }
-  // }
-  // if (isLetterInWord) {
-  //   for (var j = 0; j < this.numBlanks; j++) {
-  //     if (this.selectedWord[j] == this.inputLetter) {
-  //       blanksAndSuccesses[j] = this.inputLetter;
-  //     }
-  //   }
-  // } else {
-  //   wrongLetters.push(this.inputLetter);
-  //   guessesLeft--;
-  // }
+  for (var i = 0; i < gameWord.numBlanks; i++) {
+      if (gameWord.selectedWord[i] == this.letter) {
+      this.isLetterInWord = true;
+      console.log(this.isLetterInWord);
+      }
+  }
+  if (this.isLetterInWord) {
+      for (var j = 0; j < gameWord.numBlanks; j++) {
+          if (gameWord.selectedWord[j] == this.letter) {
+              gameWord.blanksAndSuccesses[j] = this.letter;
+      }
+    }
+  } else {
+      this.wrongLetters.push(this.letter);
+      gameWord.guessesLeft--;
+  }
+console.log(gameWord.blanksAndSuccesses);
+console.log(gameWord.guessesLeft);
+console.log(this.isLetterInWord);
+console.log(this.wrongLetters);
 }
+
+// CheckLetters("e");
+
+function roundComplete() {
+  var gameOn = new CheckLetters();
+  console.log("Win Count: " + winCount + " | Loss Count: " + lossCount + " | Guesses Left " + gameOn.guessesLeft);
+
+
+  if (gameOn.lettersInWord == gameOn.blanksAndSuccesses) {
+    // winCount++;
+    console.log("You Won!");
+    console.log(winCount);
+
+    startGame();
+
+  } else if (gameOn.guessesLeft == 0) {
+    // lossCount++;
+    console.log("You lost. *sad face*");
+    console.log(lossCount);
+
+    startGame();
+  }
+}
+
+roundComplete("y");
+
+
+// inquirer.prompt([
+
+//   {
+//     type: "input",
+//     name: "userInput",
+//     message: "Guess a letter!"
+//   }
+
+// ]).then(function(letter) {
+// // CheckLetters(letter.userInput);
+// roundComplete(letter.userInput);
+
+// });
+
+
