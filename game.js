@@ -25,7 +25,9 @@ var wordSelected = "";
 // Used for each letter in the current word. Each letter object should either display an underlying character, or a blank placeholder (such as an underscore), depending on whether or not the user has guessed the letter. This should contain letter specific logic and data.
 var selectWord = function () {
 
-      var wordOptions = ["running", "miles", "intervals", "stretching", "strength", "weights", "sweat", "strong"];
+      // var wordOptions = ["running", "miles", "intervals", "stretching", "strength", "weights", "sweat", "strong"];
+
+      var wordOptions = ["a", "a", "a", "a"];
 
       this.selectedWord = wordOptions[Math.floor(Math.random() * wordOptions.length)];
       console.log(this.selectedWord);
